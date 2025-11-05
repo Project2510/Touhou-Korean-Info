@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>테스트 페이지</title>
+
+<link rel="icon" type="image/png" sizes="16x16" href="./fav/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="./fav/favicon-48x48.png">
+
+<link rel="apple-touch-icon" sizes="180x180" href="./fav/apple-touch-icon.png">
+
+<link rel="icon" type="image/png" sizes="192x192" href="./fav/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./fav/android-chrome-512x512.png">
+
+<meta name="theme-color" content="#bb2d2d">
+
+<meta property="og:title" content="사이트 이름">
+<meta property="og:description" content="사이트 설명">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://project2510.github.io/MyOwnTest/">
+<meta property="og:image" content="https://Project2510.github.io/MyOwnTest/img/ogimg.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="사이트 이름 (트위터용)">
+<meta name="twitter:description" content="사이트 설명 (트위터용)">
+<meta name="twitter:image" content=https://Project2510.github.io/MyOwnTest/img/ogimg.png">
+
+    
+<style>
+    
+/* -------------------- 뼈대 -------------------- */
+body {
+    font-family: Inter, Arial, sans-serif;
+    background: url('./img/background.png') repeat;
+    color: #e6eef8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    max-width: 1200px;
+    align-items: stretch;
+    padding: 0 15px;
+}
+
+.row-wrapper {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 60px;
+    justify-content: flex-start;
+}
+
+.row-title {
+    width: 240px;
+    text-align: left;
+    flex-shrink: 0;
+}
+
+.button-group {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.row2, .row3 {
+    display: flex;
+    gap: 48px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 720px;
+}
+
+/* -------------------- 중앙 버튼 -------------------- */
+.button-box {
+    width: 200px;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+.button-box:hover {
+    transform: scale(1.07);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+.button-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    pointer-events: none;
+}
+
+/* -------------------- 하단 버튼 -------------------- */
+#faq-toggle-btn,
+#left-link-btn,
+#masterpiece-btn,
+#events-toggle-btn {
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    transition: transform 0.25s ease;
+    box-shadow: none;
+    z-index: 1000;
+}
+
+#faq-toggle-btn img,
+#left-link-btn img,
+#masterpiece-btn img,
+#events-toggle-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    pointer-events: none;
+}
+
+#faq-toggle-btn:hover,
+#left-link-btn:hover,
+#masterpiece-btn:hover,
+#events-toggle-btn:hover {
+    transform: scale(1.1);
+}
+
+/* 개별 위치 (데스크톱) */
+#faq-toggle-btn { right: 30px; bottom: 30px; }
+#masterpiece-btn { right: 120px; bottom: 30px; }
+#events-toggle-btn { right: 210px; bottom: 30px; }
+#left-link-btn { left: 30px; bottom: 30px; }
+
+/* -------------------- FAQ 윈도우 -------------------- */
+#faq-window {
+    position: fixed;
+    right: 30px;
+    bottom: 120px;
+    width: 350px;
+    max-height: 450px;
+    border: 8px solid #d0c090;
+    background: rgba(255, 255, 255, 1.0);
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    z-index: 999;
+    display: none;
+    flex-direction: column;
+    overflow-y: auto;
+    color: #1b2657;
+}
+.faq-item {
+    margin-bottom: 10px;
+}
+.faq-question {
+    padding: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #ede8ce;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.faq-answer {
+    max-height: 0;
+    overflow-y: auto;
+    padding: 0;
+    background-color: #efeeea;
+    border-radius: 0 0 5px 5px;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+}
+.faq-item.active .faq-answer {
+    max-height: 500px;
+    padding: 10px;
+    margin-top: 5px;
+}
+.faq-icon {
+    transition: transform 0.3s ease-out;
+}
+.faq-item.active .faq-icon {
+    transform: rotate(180deg);
+}
+
+
+/* -------------------- MP 윈도우 -------------------- */
+#mp-window {
+    position: fixed;
+    right: 120px;
+    bottom: 120px;
+    width: 350px;
+    max-height: 450px;
+    border: 8px solid #1b2657; 
+    background: rgba(255, 255, 255, 1.0);
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    z-index: 998;
+    display: none;
+    flex-direction: column;
+    overflow-y: auto;
+    color: #1b2657;
+}
+.mp-item {
+    margin-bottom: 10px;
+}
+.mp-question {
+    padding: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #e6ebf9;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.mp-answer {
+    max-height: 0;
+    overflow-y: auto;
+    padding: 0;
+    background-color: #f5f7fd; 
+    border-radius: 0 0 5px 5px;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+}
+.mp-item.active .mp-answer {
+    max-height: 500px;
+    padding: 10px;
+    margin-top: 5px;
+}
+.mp-icon {
+    transition: transform 0.3s ease-out;
+}
+.mp-item.active .mp-icon {
+    transform: rotate(180deg);
+}
+
+#mp-window .mp-answer a {
+    display: block;
+    padding: 8px 10px;
+    color: #1b2657;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    background-color: #ffffff;
+    border: 1px solid #e6ebf9;
+    transition: background-color 0.2s ease;
+}
+#mp-window .mp-answer a:hover {
+    background-color: #e6ebf9;
+}
+#mp-window .mp-answer div {
+    padding: 10px;
+    color: #555;
+    text-align: center;
+}
+
+/* -------------------- Events 윈도우 -------------------- */
+#events-window {
+    position: fixed;
+    right: 210px;
+    bottom: 120px;
+    width: 350px;
+    max-height: 450px;
+    border: 8px solid #bb2d2d;
+    background: #fffafa;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    z-index: 997;
+    display: none;
+    flex-direction: column;
+    overflow-y: auto;
+    color: #3d1a1a;
+    font-size: 0.95em;
+}
+.event-item {
+    padding: 10px 12px;
+    background-color: #fdeeed;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    border: 1px solid #f9dddd;
+    font-weight: bold;
+}
+#events-window .events-message {
+    padding: 20px;
+    color: #777;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 150px;
+}
+
+
+/* -------------------- 모바일 반응형 -------------------- */
+@media (max-width: 768px) {
+    body {
+        padding-bottom: 80px; 
+    }
+
+    .container {
+        padding: 0 5px;
+    }
+    .row-wrapper {
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+    }
+    .row2, .row3 {
+        gap: 10px;
+        width: 100%;
+        justify-content: center;
+    }
+    .button-box {
+        width: calc(50% - 10px);
+        aspect-ratio: 1 / 1;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+    #faq-window {
+        right: 10px;
+        left: 10px;
+        bottom: 80px;
+        width: auto;
+        max-height: calc(100vh - 220px); 
+        overflow-y: auto;
+        padding: 12px;
+        border-radius: 8px;
+    }
+    #mp-window {
+        right: 10px;
+        left: 10px;
+        bottom: 80px;
+        width: auto;
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
+        padding: 12px;
+        border-radius: 8px;
+    }
+    #events-window {
+        right: 10px;
+        left: 10px;
+        bottom: 80px;
+        width: auto;
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
+        padding: 12px;
+        border-radius: 8px;
+    }
+    
+    /* 모바일 하단 버튼 바 */
+    .bottom-button-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        
+        background-color: #bb2d2d;
+        box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.3);
+        border-top: none;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 12px;
+        box-sizing: border-box;
+    }
+
+    .bottom-button-right-group {
+        display: flex;
+        gap: 12px;
+    }
+
+    #faq-toggle-btn,
+    #left-link-btn,
+    #masterpiece-btn,
+    #events-toggle-btn {
+        position: static;
+        width: 50px;
+        height: 50px;
+        left: auto;
+        right: auto;
+        bottom: auto;
+    }
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="row-wrapper">
+        <div class="row-title">
+            <img src="./img/title1.png" alt="1행" style="width: 100%; height: auto;">
+        </div>
+        <div class="button-group">
+            <div class="row2">
+                <div class="button-box" id="btn1" data-csv="./csv/links_char.csv">
+                    <img src="./img/button1.png" alt="버튼 1">
+                </div>
+                <div class="button-box" id="btn2" data-csv="./csv/links_ost.csv">
+                    <img src="./img/button2.png" alt="버튼 2">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row-wrapper">
+        <div class="row-title">
+            <img src="./img/title2.png" alt="2행" style="width: 100%; height: auto;">
+        </div>
+        <div class="button-group">
+            <div class="row3">
+                <div class="button-box" id="btn3" data-csv="./csv/links_dj.csv">
+                    <img src="./img/button3.png" alt="버튼 3">
+                </div>
+                <div class="button-box" id="btn4" data-csv="./csv/links_nonvc.csv">
+                    <img src="./img/button4.png" alt="버튼 4">
+                </div>
+                <div class="button-box" id="btn5" data-csv="./csv/links_vc.csv">
+                    <img src="./img/button5.png" alt="버튼 5">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bottom-button-bar">
+    <button id="left-link-btn"><img src="./img/git.png" alt="링크1"></button>
+    
+    <div class="bottom-button-right-group">
+        <button id="events-toggle-btn" style="display: none;"><img src="./img/events.png" alt="Events"></button>
+        <button id="masterpiece-btn"><img src="./img/mp.png" alt="Masterpiece"></button>
+        <button id="faq-toggle-btn"><img src="./img/faq.png" alt="FAQ"></button>
+    </div>
+</div>
+
+<div id="faq-window"></div>
+<div id="mp-window"></div>
+<div id="events-window"></div>
+
+<script>
+const FAQ_CSV_FILE = './csv/faq.csv';
+const EVENTS_CSV_FILE = './csv/events.csv';
+
+const buttonImages = {
+  btn1: './img/button1.png',
+  btn2: './img/button2.png',
+  btn3: './img/button3.png',
+  btn4: './img/button4.png',
+  btn5: './img/button5.png'
+};
+
+// -------------------- CSV 파서 --------------------
+function parseCSVLine(line) {
+  const result = [];
+  let current = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    if (char === '"' && (i === 0 || line[i - 1] !== '\\')) {
+      inQuotes = !inQuotes;
+    } else if (char === ',' && !inQuotes) {
+      result.push(current.trim());
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+  result.push(current.trim());
+  return result;
+}
+
+// -------------------- CSV 로딩 --------------------
+async function fetchCSV(csvPath, isFAQ = false) {
+  try {
+    const resp = await fetch(csvPath, { cache: "no-store" });
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const text = await resp.text();
+    const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l !== '');
+    if (isFAQ) {
+      return lines.map(line => {
+        const parts = parseCSVLine(line);
+        if (parts.length >= 2)
+          return { q: parts[0], a: parts[1], tags: parts.slice(2) };
+      }).filter(Boolean);
+    } else {
+      return lines.map(line => {
+        const parts = parseCSVLine(line);
+        if (parts.length === 0) return null;
+        return { url: parts[0], tags: parts.slice(1) };
+      }).filter(item => item && /^https?:\/\//i.test(item.url));
+    }
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+}
+
+// -------------------- MP CSV 파서 --------------------
+async function fetchMP_CSV(csvPath) {
+  try {
+    const resp = await fetch(csvPath, { cache: "no-store" });
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const text = await resp.text();
+    const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l !== '');
+    
+    return lines.map(line => {
+      const parts = parseCSVLine(line);
+      if (parts.length >= 2 && /^https?:\/\//i.test(parts[1].trim())) {
+        return { name: parts[0].trim(), url: parts[1].trim() };
+      }
+      return null;
+    }).filter(Boolean);
+  } catch (err) {
+    console.error(`정보를 불러오지 못했거나 정보가 없습니다 ${csvPath}:`, err);
+    return [];
+  }
+}
+
+// -------------------- Events CSV 파서 --------------------
+async function fetchEvents_CSV(csvPath) {
+  try {
+    const resp = await fetch(csvPath, { cache: "no-store" });
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const text = await resp.text();
+    return text.split(/\r?\n/).map(l => l.trim()).filter(l => l !== '');
+  } catch (err) {
+    console.error(`이벤트 정보를 불러오지 못했습니다 ${csvPath}:`, err);
+    return [];
+  }
+}
+
+
+// -------------------- 중앙 버튼 동작 --------------------
+async function handleClick(event) {
+  const box = event.currentTarget;
+  const csvFile = box.getAttribute('data-csv');
+  const links = await fetchCSV(csvFile, false);
+  if (links.length === 0) {
+    alert('링크를 불러오지 못했거나 링크가 없습니다.');
+    return;
+  }
+  const randIndex = Math.floor(Math.random() * links.length);
+  window.open(links[randIndex].url, '_blank', 'noopener');
+}
+
+document.querySelectorAll('.button-box').forEach(box => {
+  box.addEventListener('click', handleClick);
+});
+
+// -------------------- 하단 버튼 동작 --------------------
+const faqToggleBtn = document.getElementById('faq-toggle-btn');
+const faqWindow = document.getElementById('faq-window');
+const mpToggleBtn = document.getElementById('masterpiece-btn'); 
+const mpWindow = document.getElementById('mp-window');
+const eventsToggleBtn = document.getElementById('events-toggle-btn');
+const eventsWindow = document.getElementById('events-window');
+
+// --- FAQ 관련 함수 ---
+function createFAQItem(question, answer, tags = []) {
+  const item = document.createElement('div');
+  item.className = 'faq-item';
+  item.innerHTML = `
+      <div class="faq-question">
+          ${question}
+          <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-answer">${answer}</div>
+  `;
+  item.querySelector('.faq-question').addEventListener('click', function () {
+    const isActive = item.classList.contains('active');
+    document.querySelectorAll('#faq-window .faq-item').forEach(i => i.classList.remove('active'));
+    if (!isActive) item.classList.add('active');
+  });
+  return item;
+}
+
+async function loadFAQContent() {
+  faqWindow.innerHTML = '<div style="padding: 20px; color: #94a3b8; display: flex; justify-content: center; align-items: center; min-height: 150px;">내용을 불러오는 중...</div>';
+  const qaPairs = await fetchCSV(FAQ_CSV_FILE, true);
+  faqWindow.innerHTML = '';
+  if (qaPairs.length === 0) {
+    faqWindow.innerHTML = '<div style="padding: 20px; color: #f87171; display: flex; justify-content: center; align-items: center; min-height: 150px;">내용을 불러오지 못했거나 내용이 없습니다.</div>';
+    return;
+  }
+  qaPairs.forEach(pair => {
+    const item = createFAQItem(pair.q, pair.a, pair.tags);
+    faqWindow.appendChild(item);
+  });
+}
+
+// --- MP 관련 함수  ---
+function createMPItem(title, csvPath) {
+  const item = document.createElement('div');
+  item.className = 'mp-item';
+  item.setAttribute('data-csv', csvPath);
+  item.innerHTML = `
+      <div class="mp-question">
+          ${title}
+          <span class="mp-icon">▼</span>
+      </div>
+      <div class="mp-answer"></div> `;
+
+  item.querySelector('.mp-question').addEventListener('click', async function () {
+    const isActive = item.classList.contains('active');
+    
+    document.querySelectorAll('#mp-window .mp-item').forEach(i => i.classList.remove('active'));
+    
+    if (!isActive) {
+      item.classList.add('active');
+      const answerDiv = item.querySelector('.mp-answer');
+      
+      if (answerDiv.innerHTML === '') {
+        answerDiv.innerHTML = '<div style="color: #555; text-align: center; padding: 10px;">링크를 불러오는 중...</div>';
+        const links = await fetchMP_CSV(csvPath);
+        
+        if (links.length === 0) {
+          answerDiv.innerHTML = '<div style="color: #f87171; text-align: center; padding: 10px;">링크가 없거나 불러오지 못했습니다.</div>';
+        } else {
+          answerDiv.innerHTML = links.map(link => 
+            `<a href="${link.url}" target="_blank" rel="noopener">${link.name}</a>`
+          ).join('');
+        }
+      }
+    }
+  });
+  return item;
+}
+
+function loadMPContent() {
+  mpWindow.innerHTML = '';
+  const mpItems = [
+    { title: '만화', csv: './csv/links_mp_dj.csv' },
+    { title: '음악', csv: './csv/links_mp_music.csv' },
+    { title: '2차 창작 게임', csv: './csv/links_mp_game.csv' },
+  ];
+  
+  mpItems.forEach(mp => {
+    const item = createMPItem(mp.title, mp.csv);
+    mpWindow.appendChild(item);
+  });
+}
+
+// --- Events 관련 함수  ---
+async function loadEventsContent() {
+  eventsWindow.innerHTML = '<div class="events-message">내용을 불러오는 중...</div>';
+  const eventLines = await fetchEvents_CSV(EVENTS_CSV_FILE);
+  
+  if (eventLines.length === 0) {
+    eventsWindow.innerHTML = '<div class="events-message">표시할 이벤트가 없습니다.</div>';
+    return;
+  }
+  
+  eventsWindow.innerHTML = eventLines.map(line =>
+    `<div class="event-item">${line}</div>`
+  ).join('');
+}
+
+
+// --- 버튼 클릭 이벤트 핸들러  ---
+
+faqToggleBtn.addEventListener('click', () => {
+  const isVisible = faqWindow.style.display === 'flex';
+  if (isVisible) {
+    faqWindow.style.display = 'none';
+  } else {
+    faqWindow.style.display = 'flex';
+    mpWindow.style.display = 'none';
+    eventsWindow.style.display = 'none';
+    if (faqWindow.children.length === 0) {
+      loadFAQContent();
+    }
+  }
+});
+
+mpToggleBtn.addEventListener('click', () => {
+  const isVisible = mpWindow.style.display === 'flex';
+  if (isVisible) {
+    mpWindow.style.display = 'none';
+  } else {
+    mpWindow.style.display = 'flex'; 
+    faqWindow.style.display = 'none';
+    eventsWindow.style.display = 'none';
+    if (mpWindow.children.length === 0) {
+      loadMPContent();
+    }
+  }
+});
+
+eventsToggleBtn.addEventListener('click', () => {
+  const isVisible = eventsWindow.style.display === 'flex';
+  if (isVisible) {
+    eventsWindow.style.display = 'none';
+  } else {
+    eventsWindow.style.display = 'flex';
+    faqWindow.style.display = 'none';
+    mpWindow.style.display = 'none';
+    if (eventsWindow.children.length === 0) {
+      loadEventsContent();
+    }
+  }
+});
+
+
+// --- 나머지 하단 버튼 ---
+document.getElementById('left-link-btn').addEventListener('click', () => {
+    window.open('https://github.com/project2510', '_blank', 'noopener');
+});
+
+// --- 이벤트 표시 여부  ---
+(async function initializePage() {
+  const eventLines = await fetchEvents_CSV(EVENTS_CSV_FILE);
+  
+  if (eventLines.length > 0) {
+    eventsToggleBtn.style.display = 'block';
+  }
+})();
+</script>
+</body>
+</html>
+
+
+
+
+
