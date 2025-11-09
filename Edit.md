@@ -73,4 +73,5 @@ Repository 주인이 엔지니어가 아니라 답답한 부분이 있을 수 �
 
 페이지 디자인은 [동방 인기투표 사이트](https://toho-vote.info/)를 참고했습니다.
 
+
 Contact : 2510proct@gmail.com
