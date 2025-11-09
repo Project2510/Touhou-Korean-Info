@@ -68,4 +68,6 @@ csv 파일 리스트 업데이트 같은 사소한 업데이트는 양식과 목
 
 Repository 주인이 엔지니어가 아니라 답답한 부분이 있을 수 있으니 양해 부탁드립니다.
 
+페이지 디자인은 [동방 인기투표 사이트][https://toho-vote.info/]를 참고했습니다.
+
 [페이지 바로가기](https://project2510.github.io/Touhou-Korean-Info/)
