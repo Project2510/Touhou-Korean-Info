@@ -43,6 +43,11 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
+    overscroll-behavior-y: auto;
+}
+
+html {
+    overscroll-behavior-y: auto;
 }
     
 .container {
@@ -179,6 +184,9 @@ body {
     flex-direction: column;
     overflow-y: auto;
     color: #1b2657;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: auto;
+    overscroll-behavior-y: auto; 
 }
 .faq-item {
     margin-bottom: 10px;
@@ -234,6 +242,9 @@ body {
     flex-direction: column;
     overflow-y: auto;
     color: #1b2657;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: auto;
+    overscroll-behavior-y: auto; 
 }
 .mp-item {
     margin-bottom: 10px;
@@ -362,6 +373,9 @@ body {
         padding: 12px;
         border-radius: 8px;
         max-height: 55vh;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: auto;
+        overscroll-behavior-y: auto;
     }
     #mp-window {
         right: 10px;
@@ -373,6 +387,9 @@ body {
         padding: 12px;
         border-radius: 8px;
         max-height: 55vh;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: auto;
+        overscroll-behavior-y: auto;
     }
     #events-window {
         right: 10px;
@@ -804,16 +821,5 @@ if (window.innerWidth <= 768) {
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
 
 
