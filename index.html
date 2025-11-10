@@ -382,15 +382,17 @@ body {
         padding: 12px;
         border-radius: 8px;
     }
-    body::after {
-        content: '';
+    #scroll-fade-hint {
         position: fixed;
-        bottom: 70px; /* 여기 테스트중 */
+        bottom: 70px;
         left: 0;
         right: 0;
-        height: 100px;
-        background: linear-gradient(to top, #1c2a38 0%, rgba(28, 42, 56, 0.0) 100%);
+        height: 120px; 
+        z-index: 900; 
+        background: linear-gradient(to top, rgba(28, 42, 56, 1.0) 0%, rgba(28, 42, 56, 0.0) 100%);
         pointer-events: none;
+        opacity: 1;
+        transition: opacity 0.5s ease;
     }
     
     /* 모바일 하단 버튼 바 */
@@ -483,7 +485,8 @@ body {
 <div id="faq-window"></div>
 <div id="mp-window"></div>
 <div id="events-window"></div>
-
+<div id="scroll-fade-hint"></div>
+    
 <script>
 const FAQ_CSV_FILE = './csv/faq.csv';
 const EVENTS_CSV_FILE = './csv/events.csv';
@@ -767,9 +770,26 @@ document.getElementById('left-link-btn').addEventListener('click', () => {
     eventsToggleBtn.style.display = 'block';
   }
 })();
+
+const fadeHint = document.getElementById('scroll-fade-hint');
+
+if (window.innerWidth <= 768) {
+    window.addEventListener('scroll', () => {
+        const viewportBottom = window.innerHeight + window.scrollY; 
+        const documentHeight = document.body.offsetHeight;
+        
+        if (viewportBottom >= documentHeight - 10) { 
+            if (fadeHint) fadeHint.style.opacity = '0';
+        } else {
+            if (fadeHint) fadeHint.style.opacity = '1';
+        }
+    });
+}
+    
 </script>
 </body>
 </html>
+
 
 
 
