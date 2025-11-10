@@ -330,7 +330,7 @@ body {
 /* -------------------- 모바일 반응형 -------------------- */
 @media (max-width: 768px) {
     body {
-        padding-bottom: 80px; 
+        padding-bottom: 120px; 
     }
 
     .container {
@@ -770,6 +770,18 @@ document.getElementById('left-link-btn').addEventListener('click', () => {
     eventsToggleBtn.style.display = 'block';
   }
 })();
+    
+document.getElementById('left-link-btn').addEventListener('click', () => {
+    window.open('https://github.com/project2510', '_blank', 'noopener');
+});
+
+(async function initializePage() {
+  const eventLines = await fetchEvents_CSV(EVENTS_CSV_FILE);
+  
+  if (eventLines.length > 0) {
+    eventsToggleBtn.style.display = 'block';
+  }
+})();
 
 const fadeHint = document.getElementById('scroll-fade-hint');
 
@@ -778,17 +790,19 @@ if (window.innerWidth <= 768) {
         const viewportBottom = window.innerHeight + window.scrollY; 
         const documentHeight = document.body.offsetHeight;
         
-        if (viewportBottom >= documentHeight - 10) { 
+        const threshold = 90; 
+        
+        if (documentHeight - viewportBottom <= threshold) { 
             if (fadeHint) fadeHint.style.opacity = '0';
         } else {
             if (fadeHint) fadeHint.style.opacity = '1';
         }
     });
-}
-    
+}    
 </script>
 </body>
 </html>
+
 
 
 
