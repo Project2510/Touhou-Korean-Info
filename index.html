@@ -382,6 +382,16 @@ body {
         padding: 12px;
         border-radius: 8px;
     }
+    body::after {
+        content: '';
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100px;
+        background: linear-gradient(to top, #1c2a38 0%, rgba(28, 42, 56, 0.0) 100%);
+        pointer-events: none;
+    }
     
     /* 모바일 하단 버튼 바 */
     .bottom-button-bar {
@@ -760,6 +770,7 @@ document.getElementById('left-link-btn').addEventListener('click', () => {
 </script>
 </body>
 </html>
+
 
 
 
