@@ -138,19 +138,23 @@ body {
     pointer-events: none;
 }
 
-#left-link-btn:hover {
-    transform: scale(1.1);
-}
-
-#faq-toggle-btn:hover,
-#masterpiece-btn:hover,
-#events-toggle-btn:hover,
 #faq-toggle-btn.active,
 #masterpiece-btn.active,
 #events-toggle-btn.active {
     transform: scale(1.1);
 }
 
+@media (min-width: 769px) {
+    #left-link-btn:hover {
+        transform: scale(1.1);
+    }
+
+    #faq-toggle-btn:hover,
+    #masterpiece-btn:hover,
+    #events-toggle-btn:hover {
+        transform: scale(1.1);
+    }
+}
 
 #faq-toggle-btn { right: 30px; bottom: 30px; }
 #masterpiece-btn { right: 120px; bottom: 30px; }
@@ -161,7 +165,7 @@ body {
 #faq-window {
     position: fixed;
     right: 30px;
-    bottom: 120px;
+    bottom: 130px; /* 120px -> 130px로 수정 */
     width: 350px;
     max-height: 450px;
     border: 8px solid #d0c090;
@@ -216,7 +220,7 @@ body {
 #mp-window {
     position: fixed;
     right: 120px;
-    bottom: 120px;
+    bottom: 130px; /* 120px -> 130px로 수정 */
     width: 350px;
     max-height: 450px;
     border: 8px solid #1b2657; 
@@ -287,7 +291,7 @@ body {
 #events-window {
     position: fixed;
     right: 210px;
-    bottom: 120px;
+    bottom: 130px; /* 120px -> 130px로 수정 */
     width: 350px;
     max-height: 450px;
     border: 8px solid #bb2d2d;
