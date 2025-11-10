@@ -138,20 +138,26 @@ body {
     pointer-events: none;
 }
 
-#faq-toggle-btn:hover,
-#left-link-btn:hover,
-#masterpiece-btn:hover,
-#events-toggle-btn:hover {
+#left-link-btn:hover {
     transform: scale(1.1);
 }
 
-/* 개별 위치 (데스크톱) */
+#faq-toggle-btn:hover,
+#masterpiece-btn:hover,
+#events-toggle-btn:hover,
+#faq-toggle-btn.active,
+#masterpiece-btn.active,
+#events-toggle-btn.active {
+    transform: scale(1.1);
+}
+
+
 #faq-toggle-btn { right: 30px; bottom: 30px; }
 #masterpiece-btn { right: 120px; bottom: 30px; }
 #events-toggle-btn { right: 210px; bottom: 30px; }
 #left-link-btn { left: 30px; bottom: 30px; }
 
-/* -------------------- FAQ 윈도우 -------------------- */
+/* -------------------- Q&A 윈도우 -------------------- */
 #faq-window {
     position: fixed;
     right: 30px;
@@ -475,7 +481,6 @@ const buttonImages = {
   btn5: './img/button5.png'
 };
 
-// -------------------- CSV 파서 --------------------
 function parseCSVLine(line) {
   const result = [];
   let current = '';
@@ -495,7 +500,6 @@ function parseCSVLine(line) {
   return result;
 }
 
-// -------------------- CSV 로딩 --------------------
 async function fetchCSV(csvPath, isFAQ = false) {
   try {
     const resp = await fetch(csvPath, { cache: "no-store" });
@@ -521,7 +525,6 @@ async function fetchCSV(csvPath, isFAQ = false) {
   }
 }
 
-// -------------------- MP CSV 파서 --------------------
 async function fetchMP_CSV(csvPath) {
   try {
     const resp = await fetch(csvPath, { cache: "no-store" });
@@ -542,7 +545,6 @@ async function fetchMP_CSV(csvPath) {
   }
 }
 
-// -------------------- Events CSV 파서 --------------------
 async function fetchEvents_CSV(csvPath) {
   try {
     const resp = await fetch(csvPath, { cache: "no-store" });
@@ -556,7 +558,6 @@ async function fetchEvents_CSV(csvPath) {
 }
 
 
-// -------------------- 중앙 버튼 동작 --------------------
 async function handleClick(event) {
   const box = event.currentTarget;
   const csvFile = box.getAttribute('data-csv');
@@ -573,7 +574,6 @@ document.querySelectorAll('.button-box').forEach(box => {
   box.addEventListener('click', handleClick);
 });
 
-// -------------------- 하단 버튼 동작 --------------------
 const faqToggleBtn = document.getElementById('faq-toggle-btn');
 const faqWindow = document.getElementById('faq-window');
 const mpToggleBtn = document.getElementById('masterpiece-btn'); 
@@ -581,7 +581,6 @@ const mpWindow = document.getElementById('mp-window');
 const eventsToggleBtn = document.getElementById('events-toggle-btn');
 const eventsWindow = document.getElementById('events-window');
 
-// --- FAQ 관련 함수 ---
 function createFAQItem(question, answer, tags = []) {
   const item = document.createElement('div');
   item.className = 'faq-item';
@@ -614,7 +613,6 @@ async function loadFAQContent() {
   });
 }
 
-// --- MP 관련 함수  ---
 function createMPItem(title, csvPath) {
   const item = document.createElement('div');
   item.className = 'mp-item';
@@ -666,7 +664,6 @@ function loadMPContent() {
   });
 }
 
-// --- Events 관련 함수  ---
 async function loadEventsContent() {
   eventsWindow.innerHTML = '<div class="events-message">내용을 불러오는 중...</div>';
   const eventLines = await fetchEvents_CSV(EVENTS_CSV_FILE);
@@ -682,16 +679,21 @@ async function loadEventsContent() {
 }
 
 
-// --- 버튼 클릭 이벤트 핸들러  ---
-
+/* --- 버튼 클릭 이벤트 핸들러 --- */
 faqToggleBtn.addEventListener('click', () => {
   const isVisible = faqWindow.style.display === 'flex';
   if (isVisible) {
     faqWindow.style.display = 'none';
+    faqToggleBtn.classList.remove('active');
   } else {
     faqWindow.style.display = 'flex';
     mpWindow.style.display = 'none';
     eventsWindow.style.display = 'none';
+    
+    faqToggleBtn.classList.add('active');
+    mpToggleBtn.classList.remove('active');
+    eventsToggleBtn.classList.remove('active');
+    
     if (faqWindow.children.length === 0) {
       loadFAQContent();
     }
@@ -702,10 +704,16 @@ mpToggleBtn.addEventListener('click', () => {
   const isVisible = mpWindow.style.display === 'flex';
   if (isVisible) {
     mpWindow.style.display = 'none';
+    mpToggleBtn.classList.remove('active');
   } else {
     mpWindow.style.display = 'flex'; 
     faqWindow.style.display = 'none';
     eventsWindow.style.display = 'none';
+    
+    mpToggleBtn.classList.add('active');
+    faqToggleBtn.classList.remove('active');
+    eventsToggleBtn.classList.remove('active');
+    
     if (mpWindow.children.length === 0) {
       loadMPContent();
     }
@@ -716,10 +724,16 @@ eventsToggleBtn.addEventListener('click', () => {
   const isVisible = eventsWindow.style.display === 'flex';
   if (isVisible) {
     eventsWindow.style.display = 'none';
+    eventsToggleBtn.classList.remove('active');
   } else {
     eventsWindow.style.display = 'flex';
     faqWindow.style.display = 'none';
     mpWindow.style.display = 'none';
+    
+    eventsToggleBtn.classList.add('active');
+    faqToggleBtn.classList.remove('active');
+    mpToggleBtn.classList.remove('active');
+    
     if (eventsWindow.children.length === 0) {
       loadEventsContent();
     }
@@ -727,12 +741,10 @@ eventsToggleBtn.addEventListener('click', () => {
 });
 
 
-// --- Github 버튼 ---
 document.getElementById('left-link-btn').addEventListener('click', () => {
     window.open('https://github.com/project2510', '_blank', 'noopener');
 });
 
-// --- 이벤트 표시 여부  ---
 (async function initializePage() {
   const eventLines = await fetchEvents_CSV(EVENTS_CSV_FILE);
   
@@ -743,14 +755,3 @@ document.getElementById('left-link-btn').addEventListener('click', () => {
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
